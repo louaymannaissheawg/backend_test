@@ -15,7 +15,7 @@ import {stockingmec} from "../cordmessage/driver-tracker-stockin-mechanism/stock
 import {ridefinder} from "../cordmessage/cordfilter/filter";
 import process from "process";
 
-@WebSocketGateway(3001 ,{namespace : "events" ,cors: {origin : "* "}})
+@WebSocketGateway({namespace : "events" ,cors: {origin : "* "}})
 export class eventgateway implements OnGatewayConnection,OnGatewayDisconnect{
 
     constructor(private authserve : AuthService , private  jwtserv : JwtService, private satockingmec : stockingmec,private finder : ridefinder) {
