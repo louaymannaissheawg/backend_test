@@ -15,7 +15,7 @@ import {stockingmec} from "../cordmessage/driver-tracker-stockin-mechanism/stock
 import {ridefinder} from "../cordmessage/cordfilter/filter";
 import process from "process";
 
-@WebSocketGateway(3001 ,{namespace : "events" ,cors: {origin : "* "}})
+@WebSocketGateway({namespace : "events" ,cors: {origin : "* "}})
 export class eventgateway implements OnGatewayConnection,OnGatewayDisconnect{
 
     constructor(private authserve : AuthService , private  jwtserv : JwtService, private satockingmec : stockingmec,private finder : ridefinder) {
@@ -138,7 +138,10 @@ export class eventgateway implements OnGatewayConnection,OnGatewayDisconnect{
     }
     @SubscribeMessage('cancel')
     async handleget(@ConnectedSocket() client: Socket, @MessageBody() data: any){
+        const client1    =await this.satockingmec.getaclient(data)
 
+        this.io.to(client1.idonsocket).emit("canceledfromdriver",data )
+     
 
     }
 

@@ -113,14 +113,14 @@ export class TestApiController {
     await this.uploader.delete(filename);
     return res = "deleted";
   }
-    @Get(':number/checknumber')
-    async check(@Param('number') number: string,@Request() req,@Response() res ){
+    @Post('checknumber')
+    async check(@Body() body: any,@Request() req,@Response() res ){
 
-        return this.testApiService.checknumber(number , req , res)
-    } @Get(':number/checknumberdriver')
-    async checknumber(@Param('number') number: string,@Request() req,@Response() res ){
+        return this.testApiService.checknumber(body , req , res)
+    } @Post('checknumberdriver')
+    async checknumber(@Body() body: any,@Request() req,@Response() res ){
 
-        return this.testApiService.checknumberdriver(number , req , res)
+        return this.testApiService.checknumberdriver(body , req , res)
     }
     @Post("finished")
 async finished(@Request() req, @Response() res, @Body() data : any ){

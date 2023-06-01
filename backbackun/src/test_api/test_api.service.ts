@@ -95,7 +95,7 @@ export class TestApiService {
 
         // Check if user already exists
         const userExists = await this.prisma.user.findFirst({
-            where: { number },
+            where: { number :  number },
         });
 
         if (userExists) {
@@ -456,42 +456,49 @@ const saltOrRounds = 10 ;
             return res.status(500).json({ error: "Internal server error" });
         }
     }
-    async checknumber(number , req , res ){
-        try{
-            const userExists = await this.prisma.user.findFirst({
-                where: { number },
-            });
-
-            if (userExists) {
-                return res.send({message : 'number in use'})
+    async checknumber(body , req , res ){
+        try {
+            const val : string = body.number
+          const userExists = await this.prisma.user.findFirst({
+            where: {
+             number :   val 
             }
-            else return res.send({success : true})
-
-        }
-        catch (error) {
-            console.error(error);
-            throw new BadRequestException();
+          });
+      
+          if (!userExists) {
+            return res.send({ success: true });
+          } else {
+            return res.send({ message: "used" });
+          }
+        } catch (error) {
+          // Handle the error appropriately
+          console.error(error);
+          return res.send({ message: 'Error occurred' });
         }
 
     }
-async checknumberdriver(number , req , res ){
-        try{
-            const userExists = await this.prisma.driver.findFirst({
-                where: { number },
-            });
-
-            if (userExists) {
-                return res.send({message : 'number in use'})
+    async checknumberdriver(body: any, req: any, res: any) {
+        try {
+            const val : string = body.number
+            console.log("vallll"+body.number)
+          const userExists = await this.prisma.driver.findFirst({
+         where: {
+               number : val
             }
-            else return res.send({success : true})
+          });
 
+          if (!userExists) {
+            return res.send({ success: true });
+          } else {
+            return res.send({ message: "used" });
+          }
+        } catch (error) {
+          // Handle the error appropriately
+          console.error(error);
+          return res.send({ message: 'Error occurred' });
         }
-        catch (error) {
-            console.error(error);
-            throw new BadRequestException();
-        }
-
-    }
+      }
+      
 
 
 }
